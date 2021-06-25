@@ -15,7 +15,7 @@ export class AuthService {
   private readonly REFRESH_TOKEN = 'REFRESH_TOKEN';
   private readonly CLIENT = 'USER';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   isLoggedIn(): boolean {
@@ -65,10 +65,12 @@ export class AuthService {
       );
   }
 
-  private removeUser(): void {
+  public removeUser(): void {
     localStorage.removeItem(this.CLIENT);
     localStorage.removeItem(this.JWT_TOKEN);
     localStorage.removeItem(this.REFRESH_TOKEN);
+    this.router.navigate(['login']);
+
   }
 
   private getRefreshToken(): string | null {

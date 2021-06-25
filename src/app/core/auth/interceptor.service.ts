@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError, BehaviorSubject } from 'rxjs';
+import { Observable, throwError, BehaviorSubject, of } from 'rxjs';
 import { catchError, take, switchMap, filter } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
@@ -31,8 +31,13 @@ export class InterceptorService implements HttpInterceptor {
     }
 
     return next.handle(request).pipe(
-      catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+      catchError((error: any) => {
+
+        if (error instanceof HttpErrorResponse && error.status === 401 ) {
+          if( error.url && error.url.includes('refresh-tokens')) {
+                this.authService.removeUser();
+                return throwError(error);
+          }
           return this.handle401Error(request, next);
         } else {
           this.authService.logout();

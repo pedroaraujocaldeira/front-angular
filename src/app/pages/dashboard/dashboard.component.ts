@@ -1,3 +1,4 @@
+import { AuthService } from 'src/app/core/auth/auth.service';
 import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { DashboardService } from './dashboard.service';
@@ -21,7 +22,7 @@ const ELEMENT_DATA: PeriodicElement[] = [
 export class DashboardComponent implements OnInit {
   displayedColumns: string[] = ['name', 'id', 'cpf'];
   dataSource = ELEMENT_DATA;
-  constructor(public dashboardService: DashboardService) { }
+  constructor(public dashboardService: DashboardService, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.dashboardService.getListAllUser().then((data) => {
@@ -31,6 +32,10 @@ export class DashboardComponent implements OnInit {
         ELEMENT_DATA.push({cpf: user.cpf, id: user.id, name: user.name})
       } );
     })
+  }
+
+  logout() {
+    this.authService.logout().toPromise();
   }
 
 }

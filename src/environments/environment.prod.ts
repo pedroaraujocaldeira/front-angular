@@ -1,4 +1,4 @@
 export const environment = {
-  ApiUrl: 'http://localhost:3000/v1/',
+  ApiUrl: 'https://back-nodejs-x9ypf.ondigitalocean.app/v1/',
   production: true
 };

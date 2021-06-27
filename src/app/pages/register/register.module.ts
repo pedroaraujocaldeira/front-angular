@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 
 import { RegisterRoutingModule } from './register-routing.module';
 import { RegisterComponent } from './register.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 @NgModule({
@@ -11,6 +12,9 @@ import { RegisterComponent } from './register.component';
     RegisterComponent
   ],
   imports: [
+    NgxMaskModule.forRoot({
+      dropSpecialCharacters: true
+      }) ,
     CommonModule,
     RegisterRoutingModule,
     SharedModule

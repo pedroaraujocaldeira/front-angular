@@ -1,4 +1,26 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
-html, body { height: 100% }
-body, p { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  // bug da barra de ferramenta
+  height: calc(100%);
+}
+body,
+p {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+@import "~@angular/material/theming";
+@include mat-core();
+
+$app-primary: mat-palette($mat-teal, 800);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+$app-theme: mat-light-theme($app-primary, $app-accent);
+
+.backgroud-color-primary {
+  height: 100%;
+  color: mat-color($app-primary);
+  background-color: mat-color($mat-pink, 600);
+}

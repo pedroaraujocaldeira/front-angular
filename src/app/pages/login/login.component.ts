@@ -1,6 +1,8 @@
+import { OnDestroy } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { AuthService } from 'src/app/core/auth/auth.service';
 
 @Component({
@@ -8,18 +10,17 @@ import { AuthService } from 'src/app/core/auth/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  public loginInvalid = false;
+  hide = true;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
-  ) {
+    private authService: AuthService ) {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      password: ['', Validators.required]
+      cpf: ['', [Validators.required]],
+      password: ['', [Validators.required]]
     });
   }
 
@@ -30,19 +31,13 @@ export class LoginComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    this.loginInvalid = false;
     if (this.form.valid) {
-      const username = this.form.get('username')?.value;
-      const password = this.form.get('password')?.value;
       this.authService
-      .login({ cpf: username, password})
+      .login(this.form.value)
       .toPromise()
       .then((res: boolean) => {
         if (res) {
             this.router.navigate(['dashboard']);
-
-        } else {
-
         }
       })
       .catch((error) => {
@@ -53,5 +48,7 @@ export class LoginComponent implements OnInit {
 
 
     }
+  }
+  ngOnDestroy(): void {
   }
 }

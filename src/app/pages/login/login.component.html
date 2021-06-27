@@ -1,23 +1,50 @@
-<mat-card>
-  <mat-card-content>
-    <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <h2>Log In</h2>
-      <mat-error *ngIf="loginInvalid">
-        The username and password were not recognized
-      </mat-error>
-      <mat-form-field class="full-width-input">
-        <input matInput placeholder="Email" formControlName="username" required>
-        <mat-error>
-          Please provide a valid email address
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field class="full-width-input">
-        <input matInput type="password" placeholder="Password" formControlName="password" required>
-        <mat-error>
-          Please provide a valid password
-        </mat-error>
-      </mat-form-field>
-      <button mat-raised-button color="primary">Login</button>
-    </form>
-  </mat-card-content>
-</mat-card>
+<div class="backgroud-color-primary" >
+  <mat-card>
+    <mat-card-content>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h2>Login</h2>
+        <div class="mb-3">
+          <mat-form-field>
+            <mat-label>CPF</mat-label>
+            <input  matInput placeholder="CPF" type='text' mask='000.000.000-00' formControlName="cpf"  >
+            <mat-error>
+              CPF <strong> obrigatório</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="mb-3">
+        <mat-form-field>
+          <mat-label>Senha</mat-label>
+          <input matInput placeholder="Senha" formControlName="password"  [type]="hide ? 'password' : 'text'">
+          <mat-error>
+            senha <strong> obrigatório</strong>
+          </mat-error>
+          <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+        </mat-form-field>
+        </div>
+
+        <div class="row text-center">
+
+          <div class="col-6">
+            <button [routerLink]="['../register']" mat-raised-button color="primary">
+              <mat-icon>assignment</mat-icon>
+              Registrar
+            </button>
+          </div>
+          <div class="col-6">
+            <button class="button" mat-raised-button color="primary">
+              <mat-icon>input</mat-icon>
+              Entrar
+            </button>
+          </div>
+      </div>
+
+
+
+      </form>
+    </mat-card-content>
+  </mat-card>
+
+</div>
